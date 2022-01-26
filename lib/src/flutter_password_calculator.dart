@@ -293,6 +293,10 @@ class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
       children: [
         widget.backgroundColor!=null?
         Container(
+          decoration: BoxDecoration(
+            color: widget.backgroundColor,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           child: TextFormField(
             decoration: widget.decoration ??
                 InputDecoration(
