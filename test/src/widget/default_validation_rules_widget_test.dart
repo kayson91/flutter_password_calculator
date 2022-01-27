@@ -7,6 +7,7 @@ void main() {
   Future<void> loadWidget(
     WidgetTester tester, {
     required String value,
+    required List<Color> colors,
     required Set<ValidationRule> rules,
   }) async {
     await tester.pumpWidget(
@@ -14,6 +15,7 @@ void main() {
         home: Scaffold(
           body: DefaultValidationRulesWidget(
             value: value,
+            colors: colors,
             validationRules: rules,
           ),
         ),
@@ -27,6 +29,7 @@ void main() {
       await loadWidget(
         tester,
         value: 'test',
+        colors: [Colors.red, Colors.green],
         rules: {},
       );
 
@@ -40,6 +43,7 @@ void main() {
       await loadWidget(
         tester,
         value: 'Test',
+        colors: [Colors.red, Colors.green],
         rules: {
           UppercaseValidationRule(),
         },
@@ -55,6 +59,7 @@ void main() {
       await loadWidget(
         tester,
         value: 'test',
+        colors: [Colors.red, Colors.green],
         rules: {
           UppercaseValidationRule(),
         },

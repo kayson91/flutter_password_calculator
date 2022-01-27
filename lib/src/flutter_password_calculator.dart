@@ -12,9 +12,10 @@ class FlutterPasswordCalculator extends StatefulWidget {
     this.onSaved,
     this.validator,
     this.decoration,
-    this.backgroundColor,
+    this.boxDecoration,
     this.controller,
     this.validationRules = const {},
+    this.colors = const [Colors.red, Colors.green],
     this.hasShowHidePassword = true,
     this.showPasswordIcon,
     this.hidePasswordIcon,
@@ -85,11 +86,11 @@ class FlutterPasswordCalculator extends StatefulWidget {
   /// for the widget. This is done basically so we can put the show and hide icons.
   final InputDecoration? decoration;
 
-
-  /// Set [backgroundColor].
+  /// Similarly of the [decoration] property of the [Container].
   ///
-  /// Customize your [backgroundColor].
-  final Color? backgroundColor;
+  /// If no [decoration] is null, a default [BoxDecoration] will be created
+  /// for the widget. This is done basically so we can put the background and border radius.
+  final BoxDecoration? boxDecoration;
 
   /// Property of [TextFormField]
   final TextEditingController? controller;
@@ -99,6 +100,12 @@ class FlutterPasswordCalculator extends StatefulWidget {
   /// This package comes with a bunch of pre defined commom rules. But feel free to
   /// create youw own [ValidationRule].
   final Set<ValidationRule> validationRules;
+
+  /// Colors [List] for rules.
+  ///
+  /// This package comes with a bunch of pre defined colors for rules. But feel free to
+  /// create youw own [List].
+  final List<Color> colors;
 
   /// Indicates wether the widget will have Show/Hide password feature.
   final bool hasShowHidePassword;
@@ -271,7 +278,8 @@ class FlutterPasswordCalculator extends StatefulWidget {
   final bool? obscureText;
 
   @override
-  State<FlutterPasswordCalculator> createState() => _FlutterPasswordCalculatorState();
+  State<FlutterPasswordCalculator> createState() =>
+      _FlutterPasswordCalculatorState();
 }
 
 class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
@@ -291,171 +299,175 @@ class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        widget.backgroundColor!=null?
-        Container(
-          decoration: BoxDecoration(
-            color: widget.backgroundColor,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: TextFormField(
-            decoration: widget.decoration ??
-                InputDecoration(
-                  suffixIcon: widget.hasShowHidePassword
-                      ? DefaultShowHidePasswordButton(
-                    hidePassword: _hidePassword,
-                    showPasswordIcon: widget.showPasswordIcon,
-                    hidePasswordIcon: widget.hidePasswordIcon,
-                    onPressed: () {
-                      setState(() => _hidePassword = !_hidePassword);
-                    },
-                  )
-                      : null,
+        widget.boxDecoration != null
+            ? Container(
+                decoration: widget.boxDecoration ??
+                    BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                child: TextFormField(
+                  decoration: widget.decoration ??
+                      InputDecoration(
+                        suffixIcon: widget.hasShowHidePassword
+                            ? DefaultShowHidePasswordButton(
+                                hidePassword: _hidePassword,
+                                showPasswordIcon: widget.showPasswordIcon,
+                                hidePasswordIcon: widget.hidePasswordIcon,
+                                onPressed: () {
+                                  setState(
+                                      () => _hidePassword = !_hidePassword);
+                                },
+                              )
+                            : null,
+                      ),
+                  obscureText: widget.obscureText ?? _hidePassword,
+                  onChanged: (changedValue) {
+                    _value = changedValue;
+                    if (widget.onChanged != null) {
+                      widget.onChanged!(changedValue);
+                    }
+                    _passwordController.onChange(changedValue);
+                    setState(() {});
+                  },
+                  onSaved: (value) {
+                    if (widget.onSaved != null) {
+                      widget.onSaved!(value);
+                    }
+                  },
+                  validator: (value) {
+                    if (widget.validator != null) {
+                      return widget.validator!(value);
+                    }
+                  },
+                  initialValue: widget.initialValue,
+                  controller: widget.controller,
+                  focusNode: widget.focusNode,
+                  keyboardType: widget.keyboardType,
+                  textCapitalization: widget.textCapitalization,
+                  textInputAction: widget.textInputAction,
+                  style: widget.style,
+                  strutStyle: widget.strutStyle,
+                  textDirection: widget.textDirection,
+                  textAlign: widget.textAlign,
+                  textAlignVertical: widget.textAlignVertical,
+                  autofocus: widget.autofocus,
+                  readOnly: widget.readOnly,
+                  toolbarOptions: widget.toolbarOptions,
+                  showCursor: widget.showCursor,
+                  obscuringCharacter: widget.obscuringCharacter,
+                  autocorrect: widget.autocorrect,
+                  smartDashesType: widget.smartDashesType,
+                  smartQuotesType: widget.smartQuotesType,
+                  enableSuggestions: widget.enableSuggestions,
+                  maxLengthEnforcement: widget.maxLengthEnforcement,
+                  maxLines: widget.maxLines,
+                  minLines: widget.minLines,
+                  expands: widget.expands,
+                  maxLength: widget.maxLength,
+                  onTap: widget.onTap,
+                  onEditingComplete: widget.onEditingComplete,
+                  onFieldSubmitted: widget.onFieldSubmitted,
+                  inputFormatters: widget.inputFormatters,
+                  enabled: widget.enabled,
+                  cursorWidth: widget.cursorWidth,
+                  cursorHeight: widget.cursorHeight,
+                  cursorRadius: widget.cursorRadius,
+                  cursorColor: widget.cursorColor,
+                  keyboardAppearance: widget.keyboardAppearance,
+                  scrollPadding: widget.scrollPadding,
+                  enableInteractiveSelection: widget.enableInteractiveSelection,
+                  selectionControls: widget.selectionControls,
+                  buildCounter: widget.buildCounter,
+                  scrollPhysics: widget.scrollPhysics,
+                  autofillHints: widget.autofillHints,
+                  autovalidateMode: widget.autovalidateMode,
+                  scrollController: widget.scrollController,
+                  restorationId: widget.restorationId,
+                  enableIMEPersonalizedLearning:
+                      widget.enableIMEPersonalizedLearning,
                 ),
-            obscureText: widget.obscureText ?? _hidePassword,
-            onChanged: (changedValue) {
-              _value = changedValue;
-              if (widget.onChanged != null) {
-                widget.onChanged!(changedValue);
-              }
-              _passwordController.onChange(changedValue);
-              setState(() {});
-            },
-            onSaved: (value) {
-              if (widget.onSaved != null) {
-                widget.onSaved!(value);
-              }
-            },
-            validator: (value) {
-              if (widget.validator != null) {
-                return widget.validator!(value);
-              }
-            },
-            initialValue: widget.initialValue,
-            controller: widget.controller,
-            focusNode: widget.focusNode,
-            keyboardType: widget.keyboardType,
-            textCapitalization: widget.textCapitalization,
-            textInputAction: widget.textInputAction,
-            style: widget.style,
-            strutStyle: widget.strutStyle,
-            textDirection: widget.textDirection,
-            textAlign: widget.textAlign,
-            textAlignVertical: widget.textAlignVertical,
-            autofocus: widget.autofocus,
-            readOnly: widget.readOnly,
-            toolbarOptions: widget.toolbarOptions,
-            showCursor: widget.showCursor,
-            obscuringCharacter: widget.obscuringCharacter,
-            autocorrect: widget.autocorrect,
-            smartDashesType: widget.smartDashesType,
-            smartQuotesType: widget.smartQuotesType,
-            enableSuggestions: widget.enableSuggestions,
-            maxLengthEnforcement: widget.maxLengthEnforcement,
-            maxLines: widget.maxLines,
-            minLines: widget.minLines,
-            expands: widget.expands,
-            maxLength: widget.maxLength,
-            onTap: widget.onTap,
-            onEditingComplete: widget.onEditingComplete,
-            onFieldSubmitted: widget.onFieldSubmitted,
-            inputFormatters: widget.inputFormatters,
-            enabled: widget.enabled,
-            cursorWidth: widget.cursorWidth,
-            cursorHeight: widget.cursorHeight,
-            cursorRadius: widget.cursorRadius,
-            cursorColor: widget.cursorColor,
-            keyboardAppearance: widget.keyboardAppearance,
-            scrollPadding: widget.scrollPadding,
-            enableInteractiveSelection: widget.enableInteractiveSelection,
-            selectionControls: widget.selectionControls,
-            buildCounter: widget.buildCounter,
-            scrollPhysics: widget.scrollPhysics,
-            autofillHints: widget.autofillHints,
-            autovalidateMode: widget.autovalidateMode,
-            scrollController: widget.scrollController,
-            restorationId: widget.restorationId,
-            enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-          ),
-        ):
-        TextFormField(
-          decoration: widget.decoration ??
-              InputDecoration(
-                suffixIcon: widget.hasShowHidePassword
-                    ? DefaultShowHidePasswordButton(
-                        hidePassword: _hidePassword,
-                        showPasswordIcon: widget.showPasswordIcon,
-                        hidePasswordIcon: widget.hidePasswordIcon,
-                        onPressed: () {
-                          setState(() => _hidePassword = !_hidePassword);
-                        },
-                      )
-                    : null,
+              )
+            : TextFormField(
+                decoration: widget.decoration ??
+                    InputDecoration(
+                      suffixIcon: widget.hasShowHidePassword
+                          ? DefaultShowHidePasswordButton(
+                              hidePassword: _hidePassword,
+                              showPasswordIcon: widget.showPasswordIcon,
+                              hidePasswordIcon: widget.hidePasswordIcon,
+                              onPressed: () {
+                                setState(() => _hidePassword = !_hidePassword);
+                              },
+                            )
+                          : null,
+                    ),
+                obscureText: widget.obscureText ?? _hidePassword,
+                onChanged: (changedValue) {
+                  _value = changedValue;
+                  if (widget.onChanged != null) {
+                    widget.onChanged!(changedValue);
+                  }
+                  _passwordController.onChange(changedValue);
+                  setState(() {});
+                },
+                onSaved: (value) {
+                  if (widget.onSaved != null) {
+                    widget.onSaved!(value);
+                  }
+                },
+                validator: (value) {
+                  if (widget.validator != null) {
+                    return widget.validator!(value);
+                  }
+                },
+                initialValue: widget.initialValue,
+                controller: widget.controller,
+                focusNode: widget.focusNode,
+                keyboardType: widget.keyboardType,
+                textCapitalization: widget.textCapitalization,
+                textInputAction: widget.textInputAction,
+                style: widget.style,
+                strutStyle: widget.strutStyle,
+                textDirection: widget.textDirection,
+                textAlign: widget.textAlign,
+                textAlignVertical: widget.textAlignVertical,
+                autofocus: widget.autofocus,
+                readOnly: widget.readOnly,
+                toolbarOptions: widget.toolbarOptions,
+                showCursor: widget.showCursor,
+                obscuringCharacter: widget.obscuringCharacter,
+                autocorrect: widget.autocorrect,
+                smartDashesType: widget.smartDashesType,
+                smartQuotesType: widget.smartQuotesType,
+                enableSuggestions: widget.enableSuggestions,
+                maxLengthEnforcement: widget.maxLengthEnforcement,
+                maxLines: widget.maxLines,
+                minLines: widget.minLines,
+                expands: widget.expands,
+                maxLength: widget.maxLength,
+                onTap: widget.onTap,
+                onEditingComplete: widget.onEditingComplete,
+                onFieldSubmitted: widget.onFieldSubmitted,
+                inputFormatters: widget.inputFormatters,
+                enabled: widget.enabled,
+                cursorWidth: widget.cursorWidth,
+                cursorHeight: widget.cursorHeight,
+                cursorRadius: widget.cursorRadius,
+                cursorColor: widget.cursorColor,
+                keyboardAppearance: widget.keyboardAppearance,
+                scrollPadding: widget.scrollPadding,
+                enableInteractiveSelection: widget.enableInteractiveSelection,
+                selectionControls: widget.selectionControls,
+                buildCounter: widget.buildCounter,
+                scrollPhysics: widget.scrollPhysics,
+                autofillHints: widget.autofillHints,
+                autovalidateMode: widget.autovalidateMode,
+                scrollController: widget.scrollController,
+                restorationId: widget.restorationId,
+                enableIMEPersonalizedLearning:
+                    widget.enableIMEPersonalizedLearning,
               ),
-          obscureText: widget.obscureText ?? _hidePassword,
-          onChanged: (changedValue) {
-            _value = changedValue;
-            if (widget.onChanged != null) {
-              widget.onChanged!(changedValue);
-            }
-            _passwordController.onChange(changedValue);
-            setState(() {});
-          },
-          onSaved: (value) {
-            if (widget.onSaved != null) {
-              widget.onSaved!(value);
-            }
-          },
-          validator: (value) {
-            if (widget.validator != null) {
-              return widget.validator!(value);
-            }
-          },
-          initialValue: widget.initialValue,
-          controller: widget.controller,
-          focusNode: widget.focusNode,
-          keyboardType: widget.keyboardType,
-          textCapitalization: widget.textCapitalization,
-          textInputAction: widget.textInputAction,
-          style: widget.style,
-          strutStyle: widget.strutStyle,
-          textDirection: widget.textDirection,
-          textAlign: widget.textAlign,
-          textAlignVertical: widget.textAlignVertical,
-          autofocus: widget.autofocus,
-          readOnly: widget.readOnly,
-          toolbarOptions: widget.toolbarOptions,
-          showCursor: widget.showCursor,
-          obscuringCharacter: widget.obscuringCharacter,
-          autocorrect: widget.autocorrect,
-          smartDashesType: widget.smartDashesType,
-          smartQuotesType: widget.smartQuotesType,
-          enableSuggestions: widget.enableSuggestions,
-          maxLengthEnforcement: widget.maxLengthEnforcement,
-          maxLines: widget.maxLines,
-          minLines: widget.minLines,
-          expands: widget.expands,
-          maxLength: widget.maxLength,
-          onTap: widget.onTap,
-          onEditingComplete: widget.onEditingComplete,
-          onFieldSubmitted: widget.onFieldSubmitted,
-          inputFormatters: widget.inputFormatters,
-          enabled: widget.enabled,
-          cursorWidth: widget.cursorWidth,
-          cursorHeight: widget.cursorHeight,
-          cursorRadius: widget.cursorRadius,
-          cursorColor: widget.cursorColor,
-          keyboardAppearance: widget.keyboardAppearance,
-          scrollPadding: widget.scrollPadding,
-          enableInteractiveSelection: widget.enableInteractiveSelection,
-          selectionControls: widget.selectionControls,
-          buildCounter: widget.buildCounter,
-          scrollPhysics: widget.scrollPhysics,
-          autofillHints: widget.autofillHints,
-          autovalidateMode: widget.autovalidateMode,
-          scrollController: widget.scrollController,
-          restorationId: widget.restorationId,
-          enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-        ),
         if (widget.hasStrengthIndicator && _value.isNotEmpty)
           StrengthIndicatorWidget(
             password: _value,
@@ -464,6 +476,7 @@ class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
         if (widget.hasValidationRules && widget.validationRules.isNotEmpty)
           ValidationRulesWidget(
             password: _value,
+            colors: widget.colors,
             validationRules: widget.validationRules,
             validationRuleBuilder: widget.validationRuleBuilder,
           ),
