@@ -4,7 +4,6 @@ import '../validation_rule.dart';
 import 'commons.dart';
 
 typedef ValidationRulesBuilder = Widget Function(
-  List<Color> colors,
   Set<ValidationRule> rules,
   String value,
 );
@@ -13,17 +12,14 @@ class ValidationRulesWidget extends StatelessWidget {
   const ValidationRulesWidget({
     Key? key,
     required String password,
-    required List<Color> colors,
     required Set<ValidationRule> validationRules,
     ValidationRulesBuilder? validationRuleBuilder,
   })  : _password = password,
-        _colors = colors,
         _validationRules = validationRules,
         _validationRuleBuilder = validationRuleBuilder,
         super(key: key);
 
   final String _password;
-  final List<Color> _colors;
   final Set<ValidationRule> _validationRules;
   final ValidationRulesBuilder? _validationRuleBuilder;
 
@@ -31,12 +27,10 @@ class ValidationRulesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return _validationRuleBuilder != null
         ? _validationRuleBuilder!(
-            _colors,
             _validationRules,
             _password,
           )
         : DefaultValidationRulesWidget(
-            colors: _colors,
             validationRules: _validationRules,
             value: _password,
           );

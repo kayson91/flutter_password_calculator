@@ -15,7 +15,6 @@ class FlutterPasswordCalculator extends StatefulWidget {
     this.boxDecoration,
     this.controller,
     this.validationRules = const {},
-    this.colors = const [Colors.red, Colors.green],
     this.hasShowHidePassword = true,
     this.showPasswordIcon,
     this.hidePasswordIcon,
@@ -100,12 +99,6 @@ class FlutterPasswordCalculator extends StatefulWidget {
   /// This package comes with a bunch of pre defined commom rules. But feel free to
   /// create youw own [ValidationRule].
   final Set<ValidationRule> validationRules;
-
-  /// Colors [List] for rules.
-  ///
-  /// This package comes with a bunch of pre defined colors for rules. But feel free to
-  /// create youw own [List].
-  final List<Color> colors;
 
   /// Indicates wether the widget will have Show/Hide password feature.
   final bool hasShowHidePassword;
@@ -476,7 +469,6 @@ class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
         if (widget.hasValidationRules && widget.validationRules.isNotEmpty)
           ValidationRulesWidget(
             password: _value,
-            colors: widget.colors,
             validationRules: widget.validationRules,
             validationRuleBuilder: widget.validationRuleBuilder,
           ),

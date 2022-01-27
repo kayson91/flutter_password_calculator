@@ -13,7 +13,6 @@ void main() {
         home: Scaffold(
           body: ValidationRulesWidget(
             password: 'password',
-            colors: const [Colors.red, Colors.green],
             validationRules: const <ValidationRule>{},
             validationRuleBuilder: builder,
           ),
@@ -51,7 +50,7 @@ void main() {
     (tester) async {
       await loadWidget(
         tester,
-        builder: (colors, rules, value) => Container(
+        builder: (rules, value) => Container(
           key: const ValueKey('widget-from-builder'),
         ),
       );
