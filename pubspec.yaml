@@ -2,7 +2,7 @@ name: flutter_password_calculator
 description: A highly customizable password calculator. It has features such as password strenght and rules validation.
 version: 0.0.1
 repository: https://github.com/kayson91/flutter_password_calculator
-homepage: "Flutter Password Calculator"
+homepage: https://phoenix-codes.com
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
