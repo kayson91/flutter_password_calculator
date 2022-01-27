@@ -6,13 +6,16 @@ typedef RuleBuilder = Widget Function(String ruleName);
 class DefaultValidationRulesWidget extends StatelessWidget {
   const DefaultValidationRulesWidget({
     Key? key,
+    required List<Color> colors,
     required String value,
     required Set<ValidationRule> validationRules,
   })  : _value = value,
+        _colors = colors,
         _validationRules = validationRules,
         super(key: key);
 
   final String _value;
+  final List<Color> _colors;
   final Set<ValidationRule> _validationRules;
 
   @override
@@ -25,8 +28,14 @@ class DefaultValidationRulesWidget extends StatelessWidget {
           children: _validationRules
               .map(
                 (rule) => rule.validate(_value) && _value.isNotEmpty
-                    ? DefaultRulePassedWidget(rule.name)
-                    : DefaultRuleNotPassedWidget(rule.name),
+                    ? DefaultRulePassedWidget(
+                        rule.name,
+                        color: _colors[1],
+                      )
+                    : DefaultRuleNotPassedWidget(
+                        rule.name,
+                        color: _colors[0],
+                      ),
               )
               .toList(),
         ),
@@ -40,17 +49,19 @@ class DefaultRulePassedWidget extends StatelessWidget {
   const DefaultRulePassedWidget(
     this.name, {
     Key? key,
+    this.color = Colors.green,
   }) : super(key: key);
 
   final String name;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Chip(
       label: Text(
         name,
-        style: const TextStyle(
-          color: Colors.green,
+        style: TextStyle(
+          color: color,
         ),
       ),
       backgroundColor: Colors.white,
@@ -63,17 +74,19 @@ class DefaultRuleNotPassedWidget extends StatelessWidget {
   const DefaultRuleNotPassedWidget(
     this.name, {
     Key? key,
+    this.color = Colors.red,
   }) : super(key: key);
 
   final String name;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Chip(
       label: Text(
         name,
-        style: const TextStyle(
-          color: Colors.red,
+        style: TextStyle(
+          color: color,
         ),
       ),
       backgroundColor: Colors.white,
