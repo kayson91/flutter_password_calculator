@@ -331,6 +331,8 @@ class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
                   validator: (value) {
                     if (widget.validator != null) {
                       return widget.validator!(value);
+                    } else {
+                      return '';
                     }
                   },
                   initialValue: widget.initialValue,
