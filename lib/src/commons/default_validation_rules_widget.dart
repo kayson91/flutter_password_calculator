@@ -5,12 +5,11 @@ typedef RuleBuilder = Widget Function(String ruleName);
 
 class DefaultValidationRulesWidget extends StatelessWidget {
   const DefaultValidationRulesWidget({
-    Key? key,
+    super.key,
     required String value,
     required Set<ValidationRule> validationRules,
   })  : _value = value,
-        _validationRules = validationRules,
-        super(key: key);
+        _validationRules = validationRules;
 
   final String _value;
   final Set<ValidationRule> _validationRules;
@@ -43,8 +42,8 @@ class DefaultValidationRulesWidget extends StatelessWidget {
 class DefaultRulePassedWidget extends StatelessWidget {
   const DefaultRulePassedWidget(
     this.name, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String name;
 
@@ -66,8 +65,8 @@ class DefaultRulePassedWidget extends StatelessWidget {
 class DefaultRuleNotPassedWidget extends StatelessWidget {
   const DefaultRuleNotPassedWidget(
     this.name, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String name;
 

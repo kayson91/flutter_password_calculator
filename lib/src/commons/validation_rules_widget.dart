@@ -10,14 +10,13 @@ typedef ValidationRulesBuilder = Widget Function(
 
 class ValidationRulesWidget extends StatelessWidget {
   const ValidationRulesWidget({
-    Key? key,
+    super.key,
     required String password,
     required Set<ValidationRule> validationRules,
     ValidationRulesBuilder? validationRuleBuilder,
   })  : _password = password,
         _validationRules = validationRules,
-        _validationRuleBuilder = validationRuleBuilder,
-        super(key: key);
+        _validationRuleBuilder = validationRuleBuilder;
 
   final String _password;
   final Set<ValidationRule> _validationRules;

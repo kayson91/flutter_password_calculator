@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DefaultShowHidePasswordButton extends StatelessWidget {
   const DefaultShowHidePasswordButton({
-    Key? key,
+    super.key,
     required bool hidePassword,
     IconData? showPasswordIcon,
     IconData? hidePasswordIcon,
@@ -11,8 +11,7 @@ class DefaultShowHidePasswordButton extends StatelessWidget {
   })  : _hidePassword = hidePassword,
         _showPasswordIcon = showPasswordIcon,
         _hidePasswordIcon = hidePasswordIcon,
-        _onPressed = onPressed,
-        super(key: key);
+        _onPressed = onPressed;
 
   final bool _hidePassword;
   final IconData? _showPasswordIcon;

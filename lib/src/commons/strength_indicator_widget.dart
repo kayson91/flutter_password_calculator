@@ -7,12 +7,11 @@ typedef StrengthIndicatorBuilder = Widget Function(double strength);
 
 class StrengthIndicatorWidget extends StatelessWidget {
   const StrengthIndicatorWidget({
-    Key? key,
+    super.key,
     required String password,
     StrengthIndicatorBuilder? strengthIndicatorBuilder,
   })  : _password = password,
-        _strengthIndicatorBuilder = strengthIndicatorBuilder,
-        super(key: key);
+        _strengthIndicatorBuilder = strengthIndicatorBuilder;
 
   final String _password;
   final StrengthIndicatorBuilder? _strengthIndicatorBuilder;

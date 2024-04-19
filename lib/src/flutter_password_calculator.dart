@@ -35,7 +35,6 @@ class FlutterPasswordCalculator extends StatefulWidget {
     this.textAlignVertical,
     this.autofocus = false,
     this.readOnly = false,
-    this.toolbarOptions,
     this.showCursor,
     this.obscuringCharacter = '•',
     this.autocorrect = true,
@@ -58,7 +57,7 @@ class FlutterPasswordCalculator extends StatefulWidget {
     this.cursorColor,
     this.keyboardAppearance,
     this.scrollPadding = const EdgeInsets.all(20.0),
-    this.enableInteractiveSelection = true,
+    this.enableInteractiveSelection = false,
     this.selectionControls,
     this.buildCounter,
     this.scrollPhysics,
@@ -170,9 +169,6 @@ class FlutterPasswordCalculator extends StatefulWidget {
 
   /// Property of [TextFormField]
   final bool readOnly;
-
-  /// Property of [TextFormField]
-  final ToolbarOptions? toolbarOptions;
 
   /// Property of [TextFormField]
   final bool? showCursor;
@@ -348,7 +344,6 @@ class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
                   textAlignVertical: widget.textAlignVertical,
                   autofocus: widget.autofocus,
                   readOnly: widget.readOnly,
-                  toolbarOptions: widget.toolbarOptions,
                   showCursor: widget.showCursor,
                   obscuringCharacter: widget.obscuringCharacter,
                   autocorrect: widget.autocorrect,
@@ -415,6 +410,7 @@ class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
                   if (widget.validator != null) {
                     return widget.validator!(value);
                   }
+                  return null;
                 },
                 initialValue: widget.initialValue,
                 controller: widget.controller,
@@ -429,7 +425,6 @@ class _FlutterPasswordCalculatorState extends State<FlutterPasswordCalculator> {
                 textAlignVertical: widget.textAlignVertical,
                 autofocus: widget.autofocus,
                 readOnly: widget.readOnly,
-                toolbarOptions: widget.toolbarOptions,
                 showCursor: widget.showCursor,
                 obscuringCharacter: widget.obscuringCharacter,
                 autocorrect: widget.autocorrect,
