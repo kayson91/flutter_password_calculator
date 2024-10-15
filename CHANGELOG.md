@@ -6,3 +6,7 @@
 
 * Update flutter SDK.
 * Update libraries.
+
+## 1.0.2
+
+* Update flutter lints package.
